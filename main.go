@@ -29,22 +29,25 @@ func main() {
 
 	myimage := image.NewRGBA(image.Rectangle{image.Point{0, 0}, image.Point{int(etopoScaled.Width), int(etopoScaled.Height)}})
 
-	for x := uint32(0); x < etopoScaled.Width; x++ {
-		for y := uint32(0); y < etopoScaled.Height; y++ {
+	for x := 0; x < etopoScaled.Width; x++ {
+		for y := 0; y < etopoScaled.Height; y++ {
 			var c color.RGBA
 			altitude := etopoScaled.GetAltitude(x, y)
 			if altitude > 0 {
+				coef := float32(1) - float32(altitude)/float32(etopoScaled.Max)
+				r, g, b := color.YCbCrToRGB(uint8(coef*128), uint8(80), uint8(80))
 				c = color.RGBA{
-					uint8(altitude * 255 / etopoScaled.Max),
-					0,
-					0,
+					r,
+					g,
+					b,
 					255,
 				}
 			} else {
+				coef := float32(altitude) / float32(etopoScaled.Min)
 				c = color.RGBA{
 					0,
 					0,
-					uint8(altitude * 255 / etopoScaled.Min),
+					uint8(coef * 255),
 					255,
 				}
 			}

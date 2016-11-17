@@ -9,8 +9,8 @@ import (
 
 // Buffer is the ETOPO buffer
 type Buffer struct {
-	Width  uint32
-	Height uint32
+	Width  int
+	Height int
 	Data   []int16
 	Max    int16
 	Min    int16
@@ -18,7 +18,7 @@ type Buffer struct {
 }
 
 //ReadEtopo read ETOPO binary
-func ReadEtopo(file io.Reader, width uint32, height uint32) (buffer Buffer, err error) {
+func ReadEtopo(file io.Reader, width int, height int) (buffer Buffer, err error) {
 	buffer = Buffer{
 		width,
 		height,
