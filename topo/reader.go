@@ -7,16 +7,6 @@ import (
 	"log"
 )
 
-// Buffer is the ETOPO buffer
-type Buffer struct {
-	Width  int
-	Height int
-	Data   []int16
-	Max    int16
-	Min    int16
-	Diff   int16
-}
-
 //ReadEtopo read ETOPO binary
 func ReadEtopo(file io.Reader, width int, height int) (buffer Buffer, err error) {
 	buffer = Buffer{
@@ -38,16 +28,7 @@ func ReadEtopo(file io.Reader, width int, height int) (buffer Buffer, err error)
 		return
 	}
 
-	for _, alt := range buffer.Data {
-		if alt > buffer.Max {
-			buffer.Max = alt
-		}
-		if alt < buffer.Min {
-			buffer.Min = alt
-		}
-	}
-
-	buffer.Diff = buffer.Max - buffer.Min
+	buffer.ComputeParameters()
 
 	return
 }
