@@ -8,14 +8,16 @@ import (
 )
 
 //ReadEtopo read ETOPO binary
-func ReadEtopo(file io.Reader, width int, height int) (buffer Buffer, err error) {
-	buffer = Buffer{
-		width,
-		height,
-		make([]int16, width*height),
-		0,
-		0,
-		0,
+func ReadEtopo(file io.Reader, width int, height int) (buffer Map, err error) {
+	buffer = Map{
+		Width:  width,
+		Height: height,
+		Data:   make([]int16, width*height),
+		Max:    0,
+		Min:    0,
+		Diff:   0,
+		CellH:  1,
+		CellW:  1,
 	}
 	preData := make([]byte, width*height*2)
 	if _, err = file.Read(preData); err != nil {

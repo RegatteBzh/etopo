@@ -32,7 +32,7 @@ func main() {
 	for x := 0; x < etopoScaled.Width; x++ {
 		for y := 0; y < etopoScaled.Height; y++ {
 			var c color.RGBA
-			altitude := etopoScaled.GetAltitude(impage.Point{x, y})
+			altitude := etopoScaled.GetAltitude(image.Point{x, y})
 			if altitude > 0 {
 				coef := float32(1) - float32(altitude)/float32(etopoScaled.Max)
 				r, g, b := color.YCbCrToRGB(uint8(coef*128), uint8(80), uint8(80))
